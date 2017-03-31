@@ -211,7 +211,12 @@ print ('Size of data: ' + str(prices.size))
 
 print ('Exporting to CSV file.')
 
-# Export data to CSV File.
-prices.to_csv('data.csv')
+# Export data to CSV file.
+prices.to_csv('./data/vix_futures.csv')
+
+print ('Exporting to Excel File.')
+
+# Export data to Excel file.
+prices.to_excel('./data/vix_futures.xlsx', sheet_name='VIX Futures Prices')
 
 print ('Complete!')
