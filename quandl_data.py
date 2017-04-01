@@ -175,7 +175,10 @@ contracts = ["VXK2004",
 "VXU2016",
 "VXV2016",
 "VXX2016",
-"VXZ2016"]
+"VXZ2016",
+"VXF2017",
+"VXG2017",
+"VXH2017"]
 
 # Number of contracts
 num_of_contracts = len(contracts)
