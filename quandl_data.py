@@ -10,6 +10,9 @@ The S&P 500 Volatility Futures. Then formatted and exported to an CSV.
 import quandl
 import pandas as pd
 from time import sleep
+from api_key import *
+
+quandl.ApiConfig.api_key = api_key
 
 # Constants
 settle_col = 5
@@ -197,15 +200,12 @@ for contract in contracts:
         prices = contract_data
 
     # Add contract_data
-    prices.append(contract_data)
+    prices = prices.append(contract_data)
 
     # Check api_count
     if(api_count >= 20):
         sleep(600)
         api_count = 0
-
-    # Break to prevent all contracts from executing - development
-    break
 
 print ('Size of data: ' + str(prices.size))
 
