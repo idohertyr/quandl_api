@@ -195,8 +195,13 @@ for contract in contracts:
     close_data = quandl.get("CBOE/" + str(contract) + "." + str(close_col))
     api_count += 1
 
+    print contract
+
+    print type(contract)
+
     # Concat Data
     contract_data = pd.concat([settle_data, close_data], axis=1)
+    contract_data['Contract'] = contract
 
     # If prices is empty, set equal to first data set.
     if(prices.size <= 0):
@@ -209,6 +214,9 @@ for contract in contracts:
     if(api_count >= 20):
         sleep(600)
         api_count = 0
+
+    print 'printing data: '
+    print prices
 
 print ('Size of data: ' + str(prices.size))
 
