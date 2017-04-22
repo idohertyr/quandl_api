@@ -5,6 +5,13 @@ Date: March 31, 2017
 This program uses Quandl API to retrieve settle and close prices for
 The S&P 500 Volatility Futures. Then formatted and exported to an CSV.
 
+Returns data structure:
+Trade Date, Settle, Close, Contract
+...
+
+Additional script is ran to add the VIX Index price column.
+
+
 """
 
 import quandl
@@ -178,7 +185,9 @@ contracts = ["VXK2004",
 "VXZ2016",
 "VXF2017",
 "VXG2017",
-"VXH2017"]
+"VXH2017",
+"VXJ2017",
+"VXK2017"] # May 2017
 
 # Number of contracts
 num_of_contracts = len(contracts)
@@ -195,39 +204,34 @@ for contract in contracts:
     close_data = quandl.get("CBOE/" + str(contract) + "." + str(close_col))
     api_count += 1
 
-    print contract
-
-    print type(contract)
-
     # Concat Data
     contract_data = pd.concat([settle_data, close_data], axis=1)
+
+    # Add Column Contract
     contract_data['Contract'] = contract
 
     # If prices is empty, set equal to first data set.
     if(prices.size <= 0):
         prices = contract_data
+    else:
+        prices = prices.append(contract_data)
 
-    # Add contract_data
-    prices = prices.append(contract_data)
-
-    # Check api_count
+    # Check api_count - Sleep
     if(api_count >= 20):
         sleep(600)
         api_count = 0
 
-    print 'printing data: '
-    print prices
 
 print ('Size of data: ' + str(prices.size))
 
 print ('Exporting to CSV file.')
 
 # Export data to CSV file.
-prices.to_csv('./data/vix_futures.csv')
+prices.to_csv('./data/new_vix_futures.csv')
 
 print ('Exporting to Excel File.')
 
 # Export data to Excel file.
-prices.to_excel('./data/vix_futures.xlsx', sheet_name='VIX Futures Prices')
+prices.to_excel('./data/new_vix_futures.xlsx', sheet_name='VIX Futures Prices')
 
 print ('Complete!')

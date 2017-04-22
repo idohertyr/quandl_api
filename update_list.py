@@ -8,8 +8,8 @@ This python script updates the data and appends new data.
 
 import pandas as pd
 
-old_prices = pd.read_csv('./existing_data/vix_futures_old.csv')
-new_prices = pd.read_csv('./existing_data/vix_futures_new.csv')
+old_prices = pd.read_csv('./existing_data/vix_futures.csv')
+new_prices = pd.read_csv('./existing_data/new_vix_futures.csv')
 
 print ('Old Price CSV file size: ' + str(old_prices.size))
 print ('New Price CSV file size' + str(new_prices.size))
