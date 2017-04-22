@@ -45,7 +45,7 @@ contracts = ["VXF2004","VXG2004","VXH2004","VXJ2004","VXK2004","VXM2004","VXN200
 # Number of contracts
 num_of_contracts = len(contracts)
 
-def get_vix_futures_prices():
+def get_vix_futures_prices(prices):
 
     # Constants
     settle_col = 5
@@ -104,5 +104,5 @@ def write_files(data):
 '''
 EXECUTE
 '''
-prices = get_vix_futures_prices()
+prices = get_vix_futures_prices(prices)
 write_files(prices)
