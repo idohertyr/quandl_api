@@ -19,7 +19,7 @@ import pandas as pd
 import time
 
 # Import CSV files
-futures = pd.read_csv('./data/vix_futures_combined.csv')
+futures = pd.read_csv('./data/vix_futures.csv')
 vix_spot = pd.read_csv('./existing_data/CBOE-VIX-CLOSE.csv')
 
 '''
@@ -57,6 +57,7 @@ def write_files(data):
     data.to_csv('./data/' + timestr + 'futures_vix_spot.csv', index=False)
     data.to_excel('./data/' + timestr + 'futures_vix_spot.xlsx', index=False)
     print 'Complete'
+    pass
 
 '''
 DEFINE TIME STAMP
@@ -67,4 +68,4 @@ EXECUTE
 '''
 data = left_join_dataframes(futures, vix_spot)
 data = remove_duplicates(data)
-data = write_files(data)
+write_files(data)
