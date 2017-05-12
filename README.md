@@ -1,6 +1,6 @@
 # cboe_vix_futures
 
-####A repo of scripts for pulling data from the Quandl Api.
+#### A repo of scripts for pulling data from the Quandl Api.
 
 ##### QuandlFuturesVix.py
 
