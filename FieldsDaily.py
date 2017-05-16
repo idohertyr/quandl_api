@@ -1,11 +1,11 @@
-"""Collects data for an assortment of Volatility Indexes.
+"""Collects data for an assortment of Volatility Indices.
 
 Author: Ian Doherty
 Date: May 15, 2017
 
 This program uses the quandl API to retrieve information for:
 
-The following all have DateTime indexes.
+The following all have DateTime indices.
     
     Data analysis taken on May 16, 2017
     
@@ -23,10 +23,10 @@ The following all have DateTime indexes.
         Close: 2007-12-04 -> 2017-05-15
     CBOE/VXV: (CBOE 3-Month Volatility Index)
         ** Measure of 3-month IV of (SPX) Index options. **
-        Open: 2007-12-04 -> 2017-05-15
-        High: 2007-12-04 -> 2017-05-15
-        Low: 2007-12-04 -> 2017-05-15
-        Close: 2007-12-04 -> 2017-05-15 CLOSE??
+        OPEN: 2007-12-04 -> 2017-05-15
+        HIGH: 2007-12-04 -> 2017-05-15
+        LOW: 2007-12-04 -> 2017-05-15
+        CLOSE: 2007-12-04 -> 2017-05-15
     CHRIS/CBOE_VX1: (Continuous Contract #1)
         ** Front Month **
         Open: 2005-06-20 -> 2017-05-12
@@ -62,12 +62,12 @@ The following all have DateTime indexes.
         Low:
         Close:
 
-    **Each one returns a pandas.DataFrame
+    **Each one returns a pandas.DataFrame then a column is picked into a pandas.Series
 
 ** requires api api_key file!
 Quandl allows 20 calls every 10 minutes for free.
 
-Returns: 2 Files
+Returns: A file for each index and a file for the combined data.
 
 """
 
@@ -85,7 +85,7 @@ class FieldsDaily:
     
     """
     def __init__(self):
-        self._indexes = [
+        self._indices = [
             "CBOE/VXST",
             "CBOE/VIX",
             "CBOE/VXV",
@@ -99,14 +99,14 @@ class FieldsDaily:
         pass
 
     def get_index_data(self):
-        """Collects and combines data for defined indexes.
+        """Collects and combines data for defined indices.
         
         :return: 
         """
-        for _index in self._indexes:
+        for _index in self._indices:
             self.count += 1
 
-            print ('Working on ' + str(_index) + ' of ' + str(len(self._indexes)))
+            print ('Working on ' + str(_index) + ' - ' + str(self._indices.index(_index)+1) + ' of ' + str(len(self._indices)))
 
             data = quandl.get(str(_index))
 
@@ -122,14 +122,7 @@ class FieldsDaily:
 
             self.api_call_count += 1
 
-            print (self.complete_data)
-
             self.check_api_calls()
-
-            # DEV
-            #if self.count == 1:
-                #break
-            #pass
         pass
 
     def check_api_calls(self):
@@ -145,10 +138,8 @@ class FieldsDaily:
         """Writes index data to CSV and Excel files ('./data/[timestr]_[name].csv').
         
         """
-        print ('Writing to single file..')
         time_str = time.strftime('%Y%m%d')
         data.to_csv('./data/' + time_str + name + '.csv', index=True)
-        print ('Complete!')
         pass
 
     def write_to_files(self):
