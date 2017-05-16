@@ -86,7 +86,12 @@ class FieldsDaily:
     """
     def __init__(self):
         self._indexes = [
-            "CHRIS/CBOE_VIXMO", "CBOE/VXST", "CBOE/VIX", "CBOE/VXV", "CHRIS/CBOE_VX1", "CHRIS/CBOE_VX2", "CBOE/VXMT", "VIXMO?"
+            "CBOE/VXST",
+            "CBOE/VIX",
+            "CBOE/VXV",
+            "CHRIS/CBOE_VX1",
+            "CHRIS/CBOE_VX2",
+            "CBOE/VXMT"
         ]
         self.count = 0
         self.api_call_count = 0
