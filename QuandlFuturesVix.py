@@ -98,9 +98,9 @@ class QuandlFuturesVix:
         print ('Writing to Files ..')
         time_str = time.strftime('%Y%m%d')
         self.complete_data.index.name = 'Trade Date'
-        self.complete_data.to_csv('./data/' + time_str + 'quandl_futures_vix.csv',
+        self.complete_data.to_csv('./data/' + time_str + '_quandl_futures_vix.csv',
                                   index=True)
-        self.complete_data.to_excel('./data/' + time_str + 'quandl_futures_vix.xlsx',
+        self.complete_data.to_excel('./data/' + time_str + '_quandl_futures_vix.xlsx',
                                     sheet_name='VIX Futures Prices',
                                     index=True)
         print 'Complete!'

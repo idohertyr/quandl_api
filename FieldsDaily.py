@@ -142,8 +142,8 @@ class FieldsDaily:
         """
         print ('Writing to files..')
         time_str = time.strftime('%Y%m%d')
-        self.data.to_csv('./data/' + time_str + 'fields_daily.csv', index=True)
-        self.data.to_excel('./data/' + time_str + 'fields_daily.xlsx', sheet_name='Fields Daily', index=True)
+        self.data.to_csv('./data/' + time_str + '_fields_daily.csv', index=True)
+        self.data.to_excel('./data/' + time_str + '_fields_daily.xlsx', sheet_name='Fields Daily', index=True)
         print ('Complete!')
         pass
 
