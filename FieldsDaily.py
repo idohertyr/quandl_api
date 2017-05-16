@@ -26,7 +26,7 @@ The following all have DateTime indexes.
         Open: 2007-12-04 -> 2017-05-15
         High: 2007-12-04 -> 2017-05-15
         Low: 2007-12-04 -> 2017-05-15
-        Close: 2007-12-04 -> 2017-05-15
+        Close: 2007-12-04 -> 2017-05-15 CLOSE??
     CHRIS/CBOE_VX1: (Continuous Contract #1)
         ** Front Month **
         Open: 2005-06-20 -> 2017-05-12
@@ -95,7 +95,7 @@ class FieldsDaily:
         ]
         self.count = 0
         self.api_call_count = 0
-        self.data = pd.DataFrame()
+        self.complete_data = pd.DataFrame()
         pass
 
     def get_index_data(self):
@@ -109,22 +109,27 @@ class FieldsDaily:
             print ('Working on ' + str(_index) + ' of ' + str(len(self._indexes)))
 
             data = quandl.get(str(_index))
-            #data = data['VIX Close']
+
+            if _index == 'CBOE/VIX':
+                self.write_single_to_file(data['VIX Close'], _index[_index.index('/')+1:])
+                self.complete_data[_index] = data['VIX Close']
+            elif _index == 'CBOE/VXV':
+                self.write_single_to_file(data['CLOSE'], _index[_index.index('/')+1:])
+                self.complete_data[_index] = data['CLOSE']
+            else:
+                self.write_single_to_file(data['Close'], _index[_index.index('/')+1:])
+                self.complete_data[_index] = data['Close']
+
             self.api_call_count += 1
 
-            print (data)
-
-            if self.data.size ==0:
-                self.data = data
-            else:
-                self.data = self.data.append(data)
+            print (self.complete_data)
 
             self.check_api_calls()
 
             # DEV
-            if self.count == 1:
-                break
-            pass
+            #if self.count == 1:
+                #break
+            #pass
         pass
 
     def check_api_calls(self):
@@ -136,14 +141,24 @@ class FieldsDaily:
             self.api_call_count = 0
         pass
 
+    def write_single_to_file(self, data, name):
+        """Writes index data to CSV and Excel files ('./data/[timestr]_[name].csv').
+        
+        """
+        print ('Writing to single file..')
+        time_str = time.strftime('%Y%m%d')
+        data.to_csv('./data/' + time_str + name + '.csv', index=True)
+        print ('Complete!')
+        pass
+
     def write_to_files(self):
-        """Writes data to CSV and Excel files ('./data').
+        """Writes complete data to CSV and Excel files ('./data').
         
         """
         print ('Writing to files..')
         time_str = time.strftime('%Y%m%d')
-        self.data.to_csv('./data/' + time_str + '_fields_daily.csv', index=True)
-        self.data.to_excel('./data/' + time_str + '_fields_daily.xlsx', sheet_name='Fields Daily', index=True)
+        self.complete_data.to_csv('./data/' + time_str + '_fields_daily.csv', index=True)
+        #self.complete_data.to_excel('./data/' + time_str + '_fields_daily.xlsx', sheet_name='Fields Daily', index=True)
         print ('Complete!')
         pass
 
