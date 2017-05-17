@@ -12,7 +12,7 @@ close price from the VIX Index. The data is then combined in
 a pandas DataFrame and exported to files
 <code>data/[date]_quandl_futures_vix.[ext]</code>
 
-##### FieldsDaily.py (incomplete)
+##### FieldsDaily.py
 
 This python script collects data from six indexes related to Volatility:
 VXST, VIX, VXV, VX1, VX2, and VXMT.
